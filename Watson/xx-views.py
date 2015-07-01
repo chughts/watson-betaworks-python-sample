@@ -12,16 +12,5 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from django.conf.urls import patterns, include, url
-from django.contrib import admin
-from Watson import views
-
-urlpatterns = patterns('',
-    # Examples:
-    # url(r'^$', 'cognitive.views.home', name='home'),
-    # url(r'^blog/', include('blog.urls')),
-    
-    url(r'^$', 'Watson.views.rootindex.page', name='rootindex'),	
-    url(r'^watson/', include('Watson.urls', namespace="watson")),
-    url(r'^admin/', include(admin.site.urls)),
-)
+def index(request):
+  return render(request, 'Watson\rootindex.html')

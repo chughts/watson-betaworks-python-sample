@@ -1,3 +1,4 @@
+<!--
 # Copyright 2015 IBM
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -10,18 +11,22 @@
 # distributed under the License is distributed on an "AS IS" BASIS,
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
-# limitations under the License.
-
-from django.conf.urls import patterns, include, url
-from django.contrib import admin
-from Watson import views
-
-urlpatterns = patterns('',
-    # Examples:
-    # url(r'^$', 'cognitive.views.home', name='home'),
-    # url(r'^blog/', include('blog.urls')),
-    
-    url(r'^$', 'Watson.views.rootindex.page', name='rootindex'),	
-    url(r'^watson/', include('Watson.urls', namespace="watson")),
-    url(r'^admin/', include(admin.site.urls)),
-)
+-->
+<html>
+  <head>
+    <title>
+	</title>
+	{% load staticfiles %}
+	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  </head>
+  <body>
+    <h1>
+	  BetaWorks Sample App - Index
+	</h1>
+	<p>Application pages are:</p>
+	<ul>
+	   <li> <a href="{% url 'watson:personalities'%}">Personalities</a>	</li>
+	</ul>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>			
+  </body>
+</html>

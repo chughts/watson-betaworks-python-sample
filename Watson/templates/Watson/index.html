@@ -1,3 +1,4 @@
+<!--
 # Copyright 2015 IBM
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -10,18 +11,25 @@
 # distributed under the License is distributed on an "AS IS" BASIS,
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
-# limitations under the License.
+-->
+{% extends "Watson/base.html" %}
 
-from django.conf.urls import patterns, include, url
-from django.contrib import admin
-from Watson import views
+{% block title_html %}
+{% endblock %}
 
-urlpatterns = patterns('',
-    # Examples:
-    # url(r'^$', 'cognitive.views.home', name='home'),
-    # url(r'^blog/', include('blog.urls')),
-    
-    url(r'^$', 'Watson.views.rootindex.page', name='rootindex'),	
-    url(r'^watson/', include('Watson.urls', namespace="watson")),
-    url(r'^admin/', include(admin.site.urls)),
-)
+{% block h1 %} 
+Loaded Personalities
+{% endblock %}
+
+{% block core_body %}
+  {% if plist %}
+    <div>Personalities</div>
+    <ul>
+    {% for person in plist %}
+        <li><a href="{% url 'watson:detail' person.id %}">{{ person.personality }}</a></li>
+    {% endfor %}
+    </ul>
+  {% else %}
+    <p>No personalities found.</p>
+  {% endif %}
+{% endblock %}

@@ -12,16 +12,16 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from django.conf.urls import patterns, include, url
-from django.contrib import admin
-from Watson import views
+from django.views import generic
+from Watson.models import Big5Traits
 
-urlpatterns = patterns('',
-    # Examples:
-    # url(r'^$', 'cognitive.views.home', name='home'),
-    # url(r'^blog/', include('blog.urls')),
-    
-    url(r'^$', 'Watson.views.rootindex.page', name='rootindex'),	
-    url(r'^watson/', include('Watson.urls', namespace="watson")),
-    url(r'^admin/', include(admin.site.urls)),
-)
+class BFIndexView(generic.ListView):
+  template_name = 'Watson/index.html'
+  model = Big5Traits
+  context_object_name = 'plist'
+  
+  def get_queryset(self):
+    """Sort the traits by the personality field"""
+    return Big5Traits.objects.all().order_by("personality") 
+    # If you want to add paging then you would fetch only the first xx (10)
+    # return Big5Traits.objects.all().order_by("personality")[:10] 

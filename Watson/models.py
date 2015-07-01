@@ -12,16 +12,16 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from django.conf.urls import patterns, include, url
-from django.contrib import admin
-from Watson import views
+from django.db import models
 
-urlpatterns = patterns('',
-    # Examples:
-    # url(r'^$', 'cognitive.views.home', name='home'),
-    # url(r'^blog/', include('blog.urls')),
-    
-    url(r'^$', 'Watson.views.rootindex.page', name='rootindex'),	
-    url(r'^watson/', include('Watson.urls', namespace="watson")),
-    url(r'^admin/', include(admin.site.urls)),
-)
+# Create your models here.
+class Big5Traits(models.Model):
+  personality = models.CharField(max_length=200)
+  Openness = models.DecimalField(max_digits=5, decimal_places=2)
+  Conscientiousness = models.DecimalField(max_digits=5, decimal_places=2)
+  Extraversion = models.DecimalField(max_digits=5, decimal_places=2, default=0.0)
+  Agreeableness = models.DecimalField(max_digits=5, decimal_places=2)
+  Emotional_range = models.DecimalField(max_digits=5, decimal_places=2)
+
+  def __str__(self):
+    return self.personality

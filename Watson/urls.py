@@ -13,15 +13,11 @@
 # limitations under the License.
 
 from django.conf.urls import patterns, include, url
-from django.contrib import admin
-from Watson import views
+#from Watson import views
+from Watson.views.IndexView import BFIndexView
+from Watson.views.DetailView import BFDetailView
 
 urlpatterns = patterns('',
-    # Examples:
-    # url(r'^$', 'cognitive.views.home', name='home'),
-    # url(r'^blog/', include('blog.urls')),
-    
-    url(r'^$', 'Watson.views.rootindex.page', name='rootindex'),	
-    url(r'^watson/', include('Watson.urls', namespace="watson")),
-    url(r'^admin/', include(admin.site.urls)),
+    url(r'^$', BFIndexView.as_view(), name='personalities'),
+    url(r'^(?P<pk>\d+)/$', BFDetailView.as_view(), name='detail'),
 )
