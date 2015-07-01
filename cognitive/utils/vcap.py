@@ -12,20 +12,16 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# watson-betaworks-python-sample
+import os
+import json
 
-This is a sample python application created by IBM Betaworks to 
-show how a sample set of the Watson APIs can be used.
-
-To run locally 
-python manage.py runserver --settings=cognitive.settings.local
-
-To run on bluemix
-python manage.py runserver --settings=cognitive.settings.bluemix
-
-On bluemix the application needs the following services (edit the manifest.yml file to match the 
-instance names for your environment
-
-1. postgresql
-2. personality insights
-3. tradeoff analytics
+def get_vcap_settings(var_service):
+  """ Pulls VCAP settings from Bluemix environmental values"""
+  app_vcap_config = os.environ.get('VCAP_SERVICES')
+  if app_vcap_config:
+    app_decoded_config = json.loads(app_vcap_config) 
+    for key, value in app_decoded_config.iteritems():
+      if key.startswith(var_service): 
+        the_creds = app_decoded_config[key][0]['credentials'] 
+        return the_creds
+  return None
