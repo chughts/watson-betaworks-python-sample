@@ -13,11 +13,14 @@
 # limitations under the License.
 
 from django.conf.urls import patterns, include, url
-#from Watson import views
-from Watson.views.IndexView import BFIndexView
-from Watson.views.DetailView import BFDetailView
+from .views import pi
+from .views.IndexView import BFIndexView
+from .views.DetailView import BFDetailView
 
 urlpatterns = patterns('',
     url(r'^$', BFIndexView.as_view(), name='personalities'),
     url(r'^(?P<pk>\d+)/$', BFDetailView.as_view(), name='detail'),
+	
+    url(r'^pi$', pi.piindex, name='pinsights'),	
+    url(r'^pireq$', pi.pireq, name='piapi'),		
 )

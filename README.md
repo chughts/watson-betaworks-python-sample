@@ -29,3 +29,14 @@ instance names for your environment
 1. postgresql
 2. personality insights
 3. tradeoff analytics
+
+Put Service credentials into a file credentials.json in the Watson\static\ directory, in the form:
+
+{
+    "PI": 
+	    {
+	       "url":"https://gateway.watsonplatform.net/personality-insights/api",
+	       "user":"<user - from bluemix services for personality insights>",
+		   "password":"<password - from bluemix services for personality insights>"
+	    }
+}
