@@ -1,3 +1,4 @@
+# -*- coding: latin-1 -*-
 # Copyright 2015 IBM
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -63,8 +64,8 @@ def pireq(request):
 def processPIRequest(request, theData):
   wdc = WDCService('PI')
   service_creds = wdc.getCreds()
-  
-  data = theData["data"]
+    
+  data = theData["data"].encode('utf8', 'replace')
   personality = theData["personality"]
 	  
   results = wdc.performOperation(data)  
