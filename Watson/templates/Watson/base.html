@@ -21,7 +21,6 @@
 	  {% block title_html %} {% endblock %}
 	</title>
 	{% load staticfiles %}
-
 	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="{% static 'Watson/style.css' %}" />
   </head>
@@ -42,6 +41,7 @@
             <li class="active"><a href="{% url 'rootindex'%}">Home</a></li>
             <li><a href="{% url 'watson:personalities'%}">Personalities</a></li> 
             <li><a href="{% url 'watson:pinsights'%}">Personality Insights</a></li> 
+	        <li> <a href="{% url 'watson:tanalytics'%}">Tradeoff Analytics</a> </li>					
           </ul>
         </div><!--/.nav-collapse -->
       </div>
@@ -79,7 +79,8 @@
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>	
  
-	<script type="text/javascript" src="{% static 'Watson/js/services.js' %}"></script>	
+	
+	{% block script_extras %} {% endblock %}
 	
   </body>
 </html>

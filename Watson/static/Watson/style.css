@@ -19,7 +19,23 @@ tr.clickedrow {
   background-color: #bbbacd;  
 }
 
+.table-labels {
+  font-weight : normal;
+  font-size : 10px;
+}
 
+.table-options {
+  color : green;
+  font-weight : normal;
+  font-size : 10px;
+}
+
+.credtable-headers {
+  color : red;
+  font-weight : normal;
+  font-size : 10px;
+  padding : 0px 5px 0px 0px;
+}
 .toggle-box {
   display: none;
 }

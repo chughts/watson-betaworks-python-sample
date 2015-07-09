@@ -14,6 +14,7 @@
 
 from django.conf.urls import patterns, include, url
 from .views import pi
+from .views import ta
 from .views.IndexView import BFIndexView
 from .views.DetailView import BFDetailView
 
@@ -22,5 +23,9 @@ urlpatterns = patterns('',
     url(r'^(?P<pk>\d+)/$', BFDetailView.as_view(), name='detail'),
 	
     url(r'^pi$', pi.piindex, name='pinsights'),	
-    url(r'^pireq$', pi.pireq, name='piapi'),		
+    url(r'^pireq$', pi.pireq, name='piapi'),
+
+    url(r'^ta$', ta.taindex, name='tanalytics'),	
+    url(r'^tareq$', ta.taproblemreq, name='taproblemapi'),	
+    url(r'^taapi$', ta.taapi, name='taapi'),	
 )

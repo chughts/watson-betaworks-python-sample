@@ -12,22 +12,18 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 -->
-<html>
-  <head>
-    <title>
-	</title>
-	{% load staticfiles %}
-	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-  </head>
-  <body>
-    <h1>
-	  BetaWorks Sample App - Index
-	</h1>
+{% extends "Watson/base.html" %}
+
+{% block title_html %}
+  API Sample Usage 
+{% endblock %}
+
+{% block core_body %}
 	<p>Application pages are:</p>
 	<ul>
 	   <li> <a href="{% url 'watson:personalities'%}">Personalities</a>	</li>
 	   <li> <a href="{% url 'watson:pinsights'%}">Personalities Insights</a> </li>	
+	   <li> <a href="{% url 'watson:tanalytics'%}">Tradeoff Analytics</a> </li>		
 	</ul>
-    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>			
-  </body>
-</html>
+{% endblock %}
+

@@ -16,6 +16,7 @@ import requests
 import json
 from cognitive.utils.vcap import get_vcap_settings
 from .piservice import PersonalityInsightsService
+from .taservice import TradeoffAnalyticsService
 	
 class WDCService(object):
   """
@@ -24,17 +25,26 @@ class WDCService(object):
 
   def __init__(self, wanted_service):
     super(WDCService, self).__init__()  
-
     self.serviceType = wanted_service.upper()	
     if "PI" == self.serviceType :
-      self.service = PersonalityInsightsService("env")      
-
+      self.service = PersonalityInsightsService("env")  
+    elif "TA" == self.serviceType :
+      self.service = TradeoffAnalyticsService("env")    	  
+	
   def getCreds(self):
-    sCreds = { "url": self.service.getURL(), "username": self.service.getUser()}
+    """ 
+      Not exposing the password as that is self contained in the service for use of the service itself
+      the creds returned here are for display purposes. 
+    """
+    try:    
+      sCreds = { "url": self.service.getURL(), "username": self.service.getUser()}
+    except AttributeError:
+      sCreds = { "url": "Not Found", "username": "Not Found"}	
     return sCreds  	
 	
   def performOperation(self, text):	
     if "PI" == self.serviceType :
       return self.service.getProfile(text)  
-
+    elif "TA" == self.serviceType :
+      return self.service.getTAnalytics(text)  
 	  
