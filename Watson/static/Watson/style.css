@@ -22,6 +22,7 @@ tr.clickedrow {
 .table-labels {
   font-weight : normal;
   font-size : 10px;
+  padding : 0px 5px 0px 5px;
 }
 
 .table-options {
@@ -30,12 +31,29 @@ tr.clickedrow {
   font-size : 10px;
 }
 
+.normal-tablerow {
+  font-weight : normal;
+  font-size : 15px;
+  padding : 0px 5px 0px 5px;
+}
+
+.padded-cell {
+  padding : 0px 5px 0px 5px;
+}
+
+.rowselector {
+  font-size : 10px;
+  display: block;
+  width: 100%;
+}
+
 .credtable-headers {
   color : red;
   font-weight : normal;
   font-size : 10px;
   padding : 0px 5px 0px 0px;
 }
+
 .toggle-box {
   display: none;
 }

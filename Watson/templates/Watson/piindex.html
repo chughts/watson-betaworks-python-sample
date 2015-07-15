@@ -21,15 +21,17 @@
 {% block core_body %}
   <div>Personality Insight Credentials</div>
   <div>
-  <table>
-    <tr>
-      <th>Credential</th>
-      <th>Value</th>
-	</tr>
-    <tr>
-	  <td>URL</td>
-	  <td>{{ url }}</td>
-	</tr>
+  <table id="id_credtable">
+    <thead>
+      <tr>
+        <th>Credential</th>
+        <th>Value</th>
+	  </tr>
+      <tr>
+	    <td>URL</td>
+	    <td>{{ url }}</td>
+	  </tr>
+	</thead>  
     <tr>
 	  <td>User</td>
 	  <td>{{ username }}</td>
@@ -37,45 +39,49 @@
   </table> 
 </div>  
 
-<div>
-  <table>
-    <tr>
-	  <th>
-	    <label for="id_data">Data:</label>
-	  </th>
-	  <td>
-	    <textarea cols="40" id="id_data" name="data" rows="10"></textarea>
-	  </td>
-	</tr>
-    <tr>
-	  <th>
-	    <label for="id_personality">Personality:</label>
-	  </th>
-	  <td>
-	    <input id="id_personality" name="personality" type="text" />
-	  </td>
-	</tr>
-  </table>
+  <div class="panel panel-default">
+    <div class="panel-body">
+      <table>
+        <tr>
+	      <th>
+	        <label for="id_data">Data:</label>
+	      </th>
+	      <td>
+	        <textarea cols="40" id="id_data" name="data" rows="10"></textarea>
+	      </td>
+	    </tr>
+        <tr>
+	      <th>
+	        <label for="id_personality">Personality:</label>
+	      </th>
+	      <td>
+	        <input id="id_personality" name="personality" type="text" />
+	      </td>
+	    </tr>
+      </table>
 
-  <button onclick="javascript:perform_pi('{% url "watson:piapi" %}')">Process Personality</button>
-</div>
+      <button onclick="javascript:perform_pi('{% url "watson:piapi" %}')">Process Personality</button>
+    </div>
 
-<div id="id_response"></div>
+    <div id="id_response"></div>
 
-<div id="id_traits">
-  <div>Traits:</div>
-	<table id="id_traitstable">
-      <thead>
-        <th>Trait</th>
-        <th>Percentile</th>
-	  </thead>
-	  <tbody>
-	  </tbody>
-	</table>  
-</div>
+    <div id="id_traits">
+      <div>Traits:</div>
+	    <table id="id_traitstable">
+          <thead>
+            <th>Trait</th>
+            <th>Percentile</th>
+	      </thead>
+	      <tbody>
+	      </tbody>
+	    </table>  
+    </div>
+	
+
+  </div>
 
 {% endblock %}
 
 {% block script_extras %} 
-	<script type="text/javascript" src="/static/Watson/js/services.js"></script>
+	<script type="text/javascript" src="/static/Watson/js/piservices.js"></script>
 {% endblock %}

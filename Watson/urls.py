@@ -15,6 +15,7 @@
 from django.conf.urls import patterns, include, url
 from .views import pi
 from .views import ta
+from .views import lc
 from .views.IndexView import BFIndexView
 from .views.DetailView import BFDetailView
 
@@ -27,5 +28,11 @@ urlpatterns = patterns('',
 
     url(r'^ta$', ta.taindex, name='tanalytics'),	
     url(r'^tareq$', ta.taproblemreq, name='taproblemapi'),	
-    url(r'^taapi$', ta.taapi, name='taapi'),	
+    url(r'^taapi$', ta.taapi, name='taapi'),
+
+    url(r'^lc$', lc.lcindex, name='nlclassifier'),	
+    url(r'^lclist$', lc.lclist, name='nllist'),	
+    url(r'^nlccreate$', lc.nlcnew, name='newclassifier'),	
+	url(r'^lctwitsearch$', lc.twitsearch, name='nltwitsearch'),
+	url(r'^lcdrop', lc.drop, name='nldrop'),
 )

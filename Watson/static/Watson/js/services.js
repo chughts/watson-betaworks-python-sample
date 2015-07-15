@@ -14,62 +14,34 @@
 # limitations under the License.
 */
 
+// *********************************************
+// These are a set of utility functions used across the site.
+// *********************************************
+
 $(document).ready(function() {
-	hideStuff();
-	ajaxStuff();
+	modifyPageStyles();
 });
 
-function hideStuff(){
-	$('#id_traits').hide();
+function modifyPageStyles() {
+	// Make the form controls look a little better than that output by django
+	$("table label").addClass('table-labels');
+	$("table select").addClass('table-options');
+	$("table tbody td").addClass('padded-cell');
+	$("#id_credtable th").addClass('credtable-headers');
 }
 
-function ajaxStuff(){
-}
+function setStatusMessage(type, message) {
+	// Determine styling for the status message, removing any styles that it doesn't now need
+	var options = {'w': 'label-warning', 'i' : 'label-info', 's' : 'label-success', 'd' : 'label-danger'};
+	var e = $('#id_response');
+	
+	e.text(message);		
+	e.addClass(options[type]);		
+	delete options[type];
 
-function perform_pi(url){	
-	var personality = $('#id_personality').val();
-	var data = $('#id_data').val();
-	
-	$.ajax({
-		type: 'POST',
-		url: url,
-		data: {"personality": personality,
-		       "data": data},
-		dataType: 'json',
-		
-		success: piOK,
-		error: piNotOK
-	});
-		
-	$('#id_response').text("Results will go here");
-}
-
-function piOK(response) {
-	piresponse = JSON.parse('{"data":"the data"}');
-	
-	$('#id_response').text("Call was good - processing the Results");
-	
-	var results = response['results'];	
-	var errMessage = results['error'];
-	
-	if (errMessage) {
-		$('#id_response').text(errMessage);	
-	}	
-	else {
-		var traits = response['traits'];
-		if (traits) {
-			$('#id_traitstable > tbody').empty();
-			for (trait in traits)
-			{
-				var newRow = '<tr><td>' + trait + '</td><td>' + traits[trait] + '</td></tr>';
-				$('#id_traitstable > tbody:last-child').append(newRow);
-			}
-			$('#id_response').text("Personality profile has completed");
-			$('#id_traits').show();
+	for (o in options) {
+		if (e.hasClass(options[o])) {
+			e.removeClass(options[o]);
 		}
-    }		
-}
-
-function piNotOK() {
-	$('#id_response').text("Call was not so good");
+	}	
 }

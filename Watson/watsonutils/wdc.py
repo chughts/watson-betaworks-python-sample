@@ -17,6 +17,7 @@ import json
 from cognitive.utils.vcap import get_vcap_settings
 from .piservice import PersonalityInsightsService
 from .taservice import TradeoffAnalyticsService
+from .lcservice import NaturalLanguageClassifierService
 	
 class WDCService(object):
   """
@@ -30,7 +31,9 @@ class WDCService(object):
       self.service = PersonalityInsightsService("env")  
     elif "TA" == self.serviceType :
       self.service = TradeoffAnalyticsService("env")    	  
-	
+    elif "LC" == self.serviceType :
+      self.service = NaturalLanguageClassifierService("env")  
+	  
   def getCreds(self):
     """ 
       Not exposing the password as that is self contained in the service for use of the service itself
@@ -47,4 +50,12 @@ class WDCService(object):
       return self.service.getProfile(text)  
     elif "TA" == self.serviceType :
       return self.service.getTAnalytics(text)  
+    elif "LC" == self.serviceType :
+      return self.service.getNLClassification(text)  
+
+  def nlcService(self):
+    if "LC" == self.serviceType :
+      return self.service  
+    else :  
+      return None 
 	  

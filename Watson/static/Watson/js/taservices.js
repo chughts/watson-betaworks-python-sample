@@ -23,16 +23,9 @@ $(document).ready(function() {
 	// Don't need to do much until the Analyse button is clicked
 	// as no data is downloaded nor is the widget created until then.
 	// Build the option listeners 
-	modifyPageStyles();
 	buildListeners();
 });
 
-function modifyPageStyles() {
-	// Make the form controls look a little better than that output by django
-	$("table label").addClass('table-labels');
-	$("table select").addClass('table-options');
-	$("#id_credtable th").addClass('credtable-headers');
-}
 
 function buildListeners() {
 	// Disable the Analyse button which should only be shown if at least one objective is selected
@@ -53,21 +46,6 @@ function buildListeners() {
     }	
 }
 
-function setStatusMessage(type, message) {
-	// Determine styling for the status message, removing any styles that it doesn't now need
-	var options = {'w': 'label-warning', 'i' : 'label-info', 's' : 'label-success', 'd' : 'label-danger'};
-	var e = $('#id_response');
-	
-	e.text(message);		
-	e.addClass(options[type]);		
-	delete options[type];
-
-	for (o in options) {
-		if (e.hasClass(options[o])) {
-			e.removeClass(options[o]);
-		}
-	}	
-}
 
 function checkForObjectives(checkButtons) {
 	// Check to make sure at least one objective button is checked.
@@ -267,7 +245,7 @@ function taOK(response) {
 }
 
 function taNotOK() {
-	// There was a problem in the 
+	// There was a problem in the ajax request 
 	setStatusMessage('d', "Tradeoff Analytics request for options failed");	
 }	
 
