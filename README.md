@@ -35,8 +35,9 @@ instance names for your environment
 1. postgresql
 2. personality insights
 3. tradeoff analytics
+4. natural language classifier
 
-If running outside of bluemix then the applicaiton needs access to service credentials. 
+If running outside of bluemix then the application needs access to service credentials. 
 Put Service credentials into a file credentials.json in the Watson\static\ directory, in the form:
 {
     "PI": 
@@ -51,4 +52,15 @@ Put Service credentials into a file credentials.json in the Watson\static\ direc
 	       "user":"<user - from bluemix services for tradeoff analytics>",
 		   "password":"<password - from bluemix services for tradeoff analytics>"
 	    }
+    "LC": 		
+		{
+            "url": "https://gateway.watsonplatform.net/natural-language-classifier-beta/api",
+            "user": "<user - from bluemix services for natural language classifier>",
+            "password": "<password - from bluemix services for natural language classifier>"
+        },
+    "TW": 		
+		{
+            "consumerKey": "<from twitter>",
+            "consumerSecret": "<from twitter>"
+        }		
 }
