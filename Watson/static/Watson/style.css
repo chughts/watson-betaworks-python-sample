@@ -6,6 +6,11 @@ body {
   background: white url("images/betalogo.gif") no-repeat right bottom;
 }
 
+.errorstatus {
+ color: #D8000C;
+ background-color: #FFBABA;
+}
+
 .zebra {
   background-color: #dddddd;
   color : #666666;

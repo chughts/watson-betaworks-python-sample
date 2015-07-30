@@ -332,8 +332,28 @@
 	},	
 	{
 		"text":"hack completed, prizes awarded and then the Group photo.",
-		"classes":["NoSports"]
-	}
+		"classes":["Hackathon"]
+	},	
+	{
+		"text":"Most tests might not make the 5th day. This Edgbaston test might not make the 4th",
+		"classes":["Cricket"]
+	},	
+	{
+		"text":"Winners of the IBM #hackathon #bluemix #ibmwatson competition",
+		"classes":["Hackathon"]
+	},
+	{
+		"text":"Team making use of #Bluemix in an app that provides career advise making use of #ibmwatson PI api.",
+		"classes":["Hackathon"]
+	},
+	{
+		"text":"Team teleScrypts created a global healthcare mobile application using #Bluemix",
+		"classes":["Hackathon"]
+	},
+	{
+		"text":"and the final session begins at the EIA hackathon",
+		"classes":["Hackathon"]
+	}	
     ]
 }	
 

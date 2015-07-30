@@ -33,6 +33,7 @@ urlpatterns = patterns('',
     url(r'^lc$', lc.lcindex, name='nlclassifier'),	
     url(r'^lclist$', lc.lclist, name='nllist'),	
     url(r'^nlccreate$', lc.nlcnew, name='newclassifier'),	
+    url(r'^nlccreatex$', lc.nlcnewx, name='newclassifierx'),	 
 	url(r'^lctwitsearch$', lc.twitsearch, name='nltwitsearch'),
 	url(r'^lcdrop', lc.drop, name='nldrop'),
 )

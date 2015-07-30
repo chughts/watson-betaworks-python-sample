@@ -19,8 +19,15 @@
 // *********************************************
 
 $(document).ready(function() {
+	javascriptCheck();
 	modifyPageStyles();
+	checkForErrors();
 });
+
+function javascriptCheck() {
+	// if javascript is enabled on the browser then can remove the warning message
+	$('#no-script').remove();
+}
 
 function modifyPageStyles() {
 	// Make the form controls look a little better than that output by django
@@ -29,6 +36,15 @@ function modifyPageStyles() {
 	$("table tbody td").addClass('padded-cell');
 	$("#id_credtable th").addClass('credtable-headers');
 }
+
+function checkForErrors() {
+  var etxt = $('#id_errormessagefromserver').text();
+  // not hiding the field as the status message gets overridden by other messages, and the 
+  // reason for the error doesn't get seen
+  //$('#id_errormessagefromserver').hide();
+  setStatusMessage('d', etxt)
+}
+
 
 function setStatusMessage(type, message) {
 	// Determine styling for the status message, removing any styles that it doesn't now need

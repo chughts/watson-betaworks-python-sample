@@ -26,6 +26,9 @@ from django.views.decorators.csrf import csrf_exempt
 
 from Watson.watsonutils.wdc import WDCService
 from Watson.watsonutils.twitservice import TwitterService
+
+class UploadClassifierForm(forms.Form):
+  classInputFile = forms.FileField()
 	
 def lcindex(request):   
   # These are the views for the Natural Language Classifier portion of the application. 
@@ -53,7 +56,10 @@ def lclist(request):
   return HttpResponse(json.dumps(results), content_type="application/json")   
   
 def nlcnew(request):
-  # This is the one call that is not done through REST. Though it should also change to REST.
+  # This is a call that is not done through REST. Though it should also change to REST.
+  # This is the original new classifier request, but has been superseded by nlcnewx method.
+  # Will be removed in a future iteration, but is here for reference.
+  #
   # The request is for a new classifier. Currently the file chosen is hardcoded and sits in the 
   # static directory. This should be modified to allow a file from the client to be submitted.
   # The return is a redirect back to the classifier list, which forces it to refresh.
@@ -71,6 +77,41 @@ def nlcnew(request):
 
   return redirect('watson:nlclassifier')
 
+def nlcnewx(request):
+  # This is a call that is not done through REST. 
+  # The request is for a new classifier. The file is sent through a form 
+  # The return is a redirect back to the classifier list, which forces it to refresh.
+  wdc = WDCService('LC')
+  service_creds = wdc.getCreds()   
+
+  if request.POST:  
+    form = UploadClassifierForm(request.FILES)	
+    
+    if request.FILES and 'classInputFile' in request.FILES:
+      f = request.FILES['classInputFile']	  
+	  
+      module_dir = os.path.dirname(__file__)  
+      file_path = os.path.join(module_dir, '../static/', 'xx.json')		  
+      with open(file_path, 'wb+') as destination:
+        for chunk in f.chunks():
+          destination.write(chunk)	
+		  
+      destination.close()	  
+
+      with open(file_path) as fj:
+        data = json.loads(fj.read())
+
+      wdc = WDCService('LC')
+      service_creds = wdc.getCreds() 
+      nlcService = wdc.nlcService()
+      if nlcService is not None:
+        nlcResults = nlcService.createClassifier(data)
+        if nlcResults and 'error' in nlcResults:
+            service_creds['error'] = nlcResults['description']		
+            return render(request, 'Watson/lcindex.html', service_creds)
+  
+  return redirect('watson:nlclassifier')  
+  
 
 @csrf_exempt   
 def drop(request):

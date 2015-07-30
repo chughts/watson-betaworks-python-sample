@@ -54,7 +54,10 @@
         <h1>
 	      BetaWorks Sample App - {% block h1 %} {% endblock %}
 	    </h1>
-	
+        <div class="errorstatus" id="id_errormessagefromserver">{{ error }}</div>		
+		
+		<div id="no-script"class="bg-info">This application needs JavaScript enabled in your browser!</div>
+		
 		<corebody>
 		  {% block core_body %} {% endblock %}
 		</corebody>

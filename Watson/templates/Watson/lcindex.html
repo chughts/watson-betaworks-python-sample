@@ -21,7 +21,22 @@
 {% block core_body %}
 
 	<div>Natural Language Index</div>
-	<div><a href="{% url 'watson:newclassifier' %}">Create New Classification</a></div>
+	<!-- <div><a href="{% url 'watson:newclassifier' %}">Create New Classification</a></div> -->
+	<div><a id="id_newclassoption" href="#" onclick="javascript:onNewClassOption()">Create New Classification</a>
+		<form id="id_newclassform" 
+		      class="form-inline" 
+			  action="{% url 'watson:newclassifierx' %}" 
+			  enctype="multipart/form-data"
+			  method="post">
+			{% csrf_token %}
+			<div class="form-group">
+				<label for="id_classInputFile">Classification File input</label>
+				<input type="file" id="id_classInputFile" name="classInputFile" class="form-control" />
+					<p class="help-block">Select Classification File in JSON format.</p>
+			</div>
+			<button type="submit" class="btn btn-default" id="id_sendbutton" onclick="javascript:onNewClass()">Send</button>
+		</form>
+	</div>	
 	<div>
 	<table id="id_credtable">
 	  <thead>

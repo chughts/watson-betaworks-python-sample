@@ -32,11 +32,13 @@ function hideStuff() {
     $('#id_classifiers').hide();	
     $(id_refreshButton).hide();
 	$(id_twitButton).hide();
+	$('#id_newclassform').hide();
 }
 
 function buildListeners() {
 	$(id_twitClassifier).attr('readonly', true);
 	$(id_twitID).on('input', function(){checkTwitterFields()});
+	$(id_classInputFile).change(function(){checkChosenFile()});
 }
 
 // ****************************************************
@@ -124,6 +126,46 @@ function onRefresh() {
   fetchClassifiers();		  
 }
 
+
+// ****************************************************
+// This section has the functions that handle the 
+// new classifier request. 
+// The action is staged : 
+//		1. on selection the form dialog is displayed
+// 		2. there is a check to verify that the chose file has the json extension.
+//		3. when the send is clicked the dialog is removed.
+// the actual creation is done through python directly to the server by the form.
+// ****************************************************
+function onNewClassOption() {
+  $('#id_newclassform').slideDown();
+  $('#id_newclassoption').hide();
+  $('#id_sendbutton').prop('disabled', true);
+}
+
+function checkChosenFile() {
+	var val = $(id_classInputFile).val();	
+	var thefile = $(id_classInputFile).prop('files')[0].name;
+	
+	switch(val.substring(val.lastIndexOf('.') + 1).toLowerCase()){
+        case 'json': 
+			setStatusMessage('i', "Click on Send to start training of classifier");	
+			$('#id_sendbutton').prop('disabled', false);            
+			break;
+        default:
+			setStatusMessage('d', "Only JSON files are expected by this application");	
+			$('#id_sendbutton').prop('disabled', true);
+            $(id_classInputFile).val('');
+            break;
+    }
+}
+
+function onNewClass() {
+  $('#id_newclassform').slideUp();
+  $('#id_newclassoption').show();
+ 
+  var val = $(id_classInputFile).val();
+}
+
 // ****************************************************
 // This section has the functions that handle the 
 // classifier drop request. The classifier to drop is
@@ -149,7 +191,8 @@ function dropNotOK() {
 }
 
 function dropOK(response) {
-	setStatusMessage('i', "Call was good - processing the Results");	
+	setStatusMessage('i', "Call was good - processing the Results");
+    $('#id_errormessagefromserver').text('');	
 	var results = response['results'];	
 
 	if (results) {
