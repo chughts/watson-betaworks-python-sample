@@ -6,6 +6,12 @@ body {
   background: white url("images/betalogo.gif") no-repeat right bottom;
 }
 
+.tawidget {
+    width: 100%;
+    display: block;
+    padding: 0px;
+}
+
 .errorstatus {
  color: #D8000C;
  background-color: #FFBABA;

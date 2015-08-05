@@ -29,7 +29,7 @@ class TradeoffAnalyticsService(BaseWDCService):
                           auth=(self.user, self.password),
                           headers = {"content-type": "application/json"},
                           data=json.dumps(text)  ,
-						  params= {"generate_visualization": "false"}
+						  params= {"generate_visualization": "true"}
                           )
     try:
       return json.loads(response.text)

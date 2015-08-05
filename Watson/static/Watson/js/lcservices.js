@@ -280,7 +280,7 @@ function twitOK(response) {
 		  for (c in classifications) {
             e = classifications[c];	
 			
-            var testerRowX = '<tr><td>' + e["top_class"] 
+            var testerRowX = '<tr class="twitclassline"><td>' + e["top_class"] 
 			                    + '</td><td>' + e["confidence"].toFixed(2) 
 								+ '</td><td>' + e["message"]
 								+ '</td></tr>';
@@ -290,7 +290,15 @@ function twitOK(response) {
 		  } 
 		  $('#id_response').text("Tweet Classification complete");			  
 	      $('#id_classifications').show();		  
+		  addHoverAnimations($('.twitclassline'));
       }
     }	
 	$(id_twitButton).show();	
+}
+
+function addHoverAnimations(fields) {
+	fields.hover(
+			function(){$(this).animate({fontSize: '+=15px'}, 200)}, 
+			function(){$(this).animate({fontSize: '-=15px'}, 200)}
+		);
 }

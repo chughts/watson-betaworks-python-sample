@@ -93,20 +93,21 @@ function onAnalyseClick(url){
 function taWidgetStuff(){
 	// Creating the widget first time in
 	setStatusMessage('i', "Creating the tradeoff analytics interface");	
+	
 	var taClient = new TradeoffAnalytics( {	
 											dilemmaServiceUrl: '/watson/taapi', 
 											customCssUrl: 'https://ta-cdn.mybluemix.net/v1/modmt/styles/watson.css',
-	                                        iframe: false,											
+	                                        //iframe: false,											
 											profile: 'basic' 
 										  }, 'taWidgetContainer'); 
 	
 	// Store the widget handle so can retrieve later
 	$('#id_datastore').data('tawidget', taClient);	
 	setStatusMessage('i', "Starting the tradeoff analytics interface");
-	
+
 	taClient.subscribe('afterError', onError);
     taClient.subscribe('doneClicked', onResultSelection);
-    
+
     var topics = [ 'started', 'problemChanged', 'destroyed', 'doneClicked', 'optionClicked', 'X_finalDecisionChanged',
         'X_favoritesChanged', 'X_selectionChanged', 'X_filterChanged'];
     topics.forEach(function(t){
@@ -114,8 +115,8 @@ function taWidgetStuff(){
         console.log(JSON.stringify(e));
       });
     });	
-	
-	taClient.start(onWidgetReady);
+
+	taClient.start(onWidgetReady);	
 }
 
 function onResultSelection(event) {
@@ -123,7 +124,7 @@ function onResultSelection(event) {
 }
 
 function onError(error) {
-	// If an error has been detected, the hide the widget, and show the error.
+	// If an error has been detected, then hide the widget, and show the error.
 	errorMsg = "Error in Processing";	
 	$('#id_responseWidget').hide();	
 
@@ -150,6 +151,8 @@ function onWidgetReady() {
 	$('#id_responseWidget').show();	
 	setStatusMessage('d', "Trade-off Analytics Interface is ready - Fetching Problem");
     fetchProblem();	
+	
+	//taClient.resize(width /* Number */, height /* Number */);
 }
 
 function fetchProblem(){	
@@ -238,8 +241,11 @@ function taOK(response) {
 		// Don't really want to do this until we get the response in onResultsReady, but then size of widget is
 		// not set properly then, so for now...
 		//$('#id_responseWidget').show().width($(window).width());
+        taClient.resize();	
+		taClient.show(results, onResultsReady);     
 
-		taClient.show(results, onResultsReady);        			
+       //taClient.resize(width /* Number */, height /* Number */);
+		
       }
     }	
 }
@@ -253,9 +259,10 @@ function onResultsReady() {
 	// The response has been received, so the widget is ready to show.
 	setStatusMessage('s', "Results from Tradeoff Analytics are ready to show");	
 
-	$('#id_responseWidget').show().width($(window).width());
+	//$('#id_responseWidget').show().width($(window).width());
 	//$('#id_responseWidget').show();
-
+    taClient.resize();	   
+	   
 	jumpTo('#taWidgetContainer');
 }
 

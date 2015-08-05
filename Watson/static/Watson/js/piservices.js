@@ -16,6 +16,7 @@
 
 $(document).ready(function() {
 	hideStuff();
+	listenStuff();
 	ajaxStuff();
 });
 
@@ -24,17 +25,33 @@ function hideStuff(){
 	$('#id_traits').hide();
 }
 
+function listenStuff(){
+  $('#id_twittersearch').change(
+	function() {
+		if ($(this).is(":checked")) {
+			$('#id_datarow').slideUp();
+			$('#id_personlabel').text('Twitter Handle:');
+		}
+		else {
+			$('#id_datarow').slideDown();
+			$('#id_personlabel').text('Personality:');		
+		}
+	});
+}
+
 function ajaxStuff(){
 }
 
 function perform_pi(url){	
 	var personality = $('#id_personality').val();
 	var data = $('#id_data').val();
-	
+	var twitSearch = $('#id_twittersearch').is(":checked");
+
 	$.ajax({
 		type: 'POST',
 		url: url,
-		data: {"personality": personality,
+		data: {"performTwitterScan": twitSearch,
+			   "personality": personality,
 		       "data": data},
 		dataType: 'json',
 		
@@ -42,35 +59,39 @@ function perform_pi(url){
 		error: piNotOK
 	});
 		
-	$('#id_response').text("Results will go here");
+    setStatusMessage('i', "Results will go here");
 }
 
 function piOK(response) {
 	piresponse = JSON.parse('{"data":"the data"}');
 	
-	$('#id_response').text("Call was good - processing the Results");
+    setStatusMessage('i', "Call was good - processing the Results");
 	
 	var results = response['results'];	
-	var errMessage = results['error'];
-	
-	if (errMessage) {
-		$('#id_response').text(errMessage);	
-	}	
-	else {
-		var traits = response['traits'];
-		if (traits) {
-			$('#id_traitstable > tbody').empty();
-			for (trait in traits)
-			{
-				var newRow = '<tr><td>' + trait + '</td><td>' + traits[trait] + '</td></tr>';
-				$('#id_traitstable > tbody:last-child').append(newRow);
+	if (results) {
+		var errMessage = results['error'];	
+		if (errMessage) {
+			setStatusMessage('d', errMessage);
+		}	
+		else {
+			var traits = response['traits'];
+			if (traits) {
+				$('#id_traitstable > tbody').empty();
+				for (trait in traits)
+				{
+					var newRow = '<tr><td>' + trait + '</td><td>' + traits[trait] + '</td></tr>';
+					$('#id_traitstable > tbody:last-child').append(newRow);
+				}
+				setStatusMessage('s', "Personality profile has completed");
+				$('#id_traits').show();
 			}
-			$('#id_response').text("Personality profile has completed");
-			$('#id_traits').show();
-		}
-    }		
+		}		
+	} 
+	else {
+		setStatusMessage('d', "No response received from the service");
+	}
 }
 
 function piNotOK() {
-	$('#id_response').text("Call was not so good");
+	setStatusMessage('d', "Call was not so good");
 }

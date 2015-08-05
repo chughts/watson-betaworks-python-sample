@@ -43,6 +43,14 @@
     <div class="panel-body">
       <table>
         <tr>
+	      <td>
+	        <input type="checkbox" id="id_twittersearch" name="twittersearch"></input>
+	      </td>
+	      <th>
+	        <label for="id_twittersearch">Search Twitter timeline</label>
+	      </th>
+	    </tr>
+        <tr id="id_datarow">
 	      <th>
 	        <label for="id_data">Data:</label>
 	      </th>
@@ -52,7 +60,7 @@
 	    </tr>
         <tr>
 	      <th>
-	        <label for="id_personality">Personality:</label>
+	        <label id="id_personlabel" for="id_personality">Personality:</label>
 	      </th>
 	      <td>
 	        <input id="id_personality" name="personality" type="text" />
@@ -63,7 +71,9 @@
       <button onclick="javascript:perform_pi('{% url "watson:piapi" %}')">Process Personality</button>
     </div>
 
-    <div id="id_response"></div>
+    <br />
+    <div><span id="id_response" class="label label-info"></span></div>
+    <br />
 
     <div id="id_traits">
       <div>Traits:</div>
