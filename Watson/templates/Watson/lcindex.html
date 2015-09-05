@@ -134,6 +134,15 @@
 		    Twitter Check
 		  </button>
         </div>
+		<div>
+		  <button type="button" id="id_recordButton">
+			<span class="glyphicon glyphicon-record" aria-hidden="true"></span> Record
+		  </button>
+		  <button type="button" id="id_stopButton">
+			<span class="glyphicon glyphicon-stop" aria-hidden="true"></span> Stop
+		  </button>
+		  <div id="id_datastore"></div>
+		</div>
       </div>
   
       <br />	  
@@ -159,4 +168,5 @@
 
 {% block script_extras %} 
 	<script type="text/javascript" src="/static/Watson/js/lcservices.js"></script>
+	<script type="text/javascript" src="/static/Watson/js/stservices.js"></script>
 {% endblock %}

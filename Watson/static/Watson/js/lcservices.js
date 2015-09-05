@@ -32,6 +32,8 @@ function hideStuff() {
     $('#id_classifiers').hide();	
     $(id_refreshButton).hide();
 	$(id_twitButton).hide();
+	$(id_recordButton).hide();
+	$(id_stopButton).hide();	
 	$('#id_newclassform').hide();
 }
 
@@ -218,18 +220,44 @@ function onClassifierSelected(name, url){
 }	
 
 function checkTwitterFields(){
+    // Classifier needs to be set
+    // If Twitter ID is set then allow Twitter Selection
+    // If Twitter ID not set then allow Audio input	
 	var twitClass = $(id_twitClassifier).val();
 	var twitID = $(id_twitID).val();
-	
-	if (twitClass && twitID && (0 < twitClass.length) && (0 < twitID.length))
+
+	if (twitClass && (0 < twitClass.length))
 	{
-		$(id_twitButton).show();
-		setStatusMessage('i', "You can analyse tweets against the classifier");
-	} else {
+		if (twitID && (0 < twitID.length))
+		{
+			$(id_twitButton).show();
+			$(id_recordButton).hide();
+			setStatusMessage('i', "You can analyse tweets against the classifier");
+		}
+		else
+		{
+			$(id_twitButton).hide();
+			
+			if ( $('#id_datastore').data("audiosupported") )
+			{
+				$(id_recordButton).show();
+				setStatusMessage('i', "You can record audio and send for analysis against the classifier");
+			}
+			else {
+				$(id_recordButton).hide();
+				setStatusMessage('w', "Audio is not supported, please enter a twitter id");
+			}
+		}
+	}
+	else
+	{
 		$(id_twitButton).hide();
-		setStatusMessage('w', "Both Classifier and Twitter ID need to be entered");
-	}		
+		$(id_recordButton).hide();
+		setStatusMessage('w', "Both Classifier needs to be selected");
+	}
+
 }
+
 
 function onTwitClick(proxyapi){	
 	// Can only be clicked if enabled, and only enabled if both fields are set.
@@ -278,14 +306,7 @@ function twitOK(response) {
 		  
 		  $('#id_classtable > tbody').empty();
 		  for (c in classifications) {
-            e = classifications[c];	
-			
-            var testerRowX = '<tr class="twitclassline"><td>' + e["top_class"] 
-			                    + '</td><td>' + e["confidence"].toFixed(2) 
-								+ '</td><td>' + e["message"]
-								+ '</td></tr>';
-								
-		    $('#id_classtable > tbody:last-child').append(testerRowX);			
+            appendResponseRow(classifications[c]);
 			
 		  } 
 		  $('#id_response').text("Tweet Classification complete");			  
@@ -296,9 +317,71 @@ function twitOK(response) {
 	$(id_twitButton).show();	
 }
 
+function appendResponseRow(e) {
+	var testerRowX = '<tr class="twitclassline"><td>' + e["top_class"] 
+			                    + '</td><td>' + e["confidence"].toFixed(2) 
+								+ '</td><td>' + e["message"]
+								+ '</td></tr>';
+								
+	$('#id_classtable > tbody:last-child').append(testerRowX);			
+}
+
 function addHoverAnimations(fields) {
 	fields.hover(
 			function(){$(this).animate({fontSize: '+=15px'}, 200)}, 
 			function(){$(this).animate({fontSize: '-=15px'}, 200)}
 		);
+}
+
+// ***************************************
+// Run classification against an audio file
+// This will be called by the audio services as
+// a callback when the audio is ready.
+// ***************************************
+
+function handleAudioAsInput(audioBlob) {
+	var url = $(id_twitClassifier).data('urlClassifier');	
+	var fd = new FormData();
+	fd.append('classifierurl', url);	
+	fd.append('fname', 'classifieraudio.wav');
+	fd.append('data', audioBlob);
+	$.ajax({
+		type: 'POST',
+		url: '/watson/staudio',
+		data: fd,
+		processData: false,
+		contentType: false,
+		success: audioSentOK,
+		error: audioSentNotOK
+	});
+	setStatusMessage('i', "Audio sent to server, waiting for a response");	
+}
+
+function audioSentNotOK() {
+	setStatusMessage('d', "Transmission of Audio Failed");
+	$('#id_recordButton').show();
+}
+
+function audioSentOK(response) {
+	setStatusMessage('i', "Call was good - processing the Results");
+	
+	var results = response['results'];	
+	if (results) {
+		var errMessage = results['error'];
+		if (errMessage) {
+			setStatusMessage('d', errMessage);	
+		}	
+		else {
+			var e = results['classification'];		  
+			$('#id_classtable > tbody').empty();
+
+            appendResponseRow(e);			
+										
+			$('#id_response').text("Audio classification complete");
+			setStatusMessage('i', "Audio classification completed");		  
+			$('#id_classifications').show();		  
+			addHoverAnimations($('.twitclassline'));
+      }
+    }		
+	$('#id_recordButton').show();
 }

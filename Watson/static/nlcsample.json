@@ -353,6 +353,10 @@
 	{
 		"text":"and the final session begins at the EIA hackathon",
 		"classes":["Hackathon"]
+	},
+	{
+		"text":"Finally got round to reading Watchman this weekend. Can now go back to listening to Book at Bedtime on R4.",
+		"classes":["BookReading"]
 	}	
     ]
 }	

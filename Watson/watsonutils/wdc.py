@@ -18,6 +18,7 @@ from cognitive.utils.vcap import get_vcap_settings
 from .piservice import PersonalityInsightsService
 from .taservice import TradeoffAnalyticsService
 from .lcservice import NaturalLanguageClassifierService
+from .stservice import SpeechToTextService
 	
 class WDCService(object):
   """
@@ -33,6 +34,8 @@ class WDCService(object):
       self.service = TradeoffAnalyticsService("env")    	  
     elif "LC" == self.serviceType :
       self.service = NaturalLanguageClassifierService("env")  
+    elif "ST" == self.serviceType :
+      self.service = SpeechToTextService("env")  		  
 	  
   def getCreds(self):
     """ 
@@ -58,4 +61,9 @@ class WDCService(object):
       return self.service  
     else :  
       return None 
-	  
+
+  def stService(self):
+    if "ST" == self.serviceType :
+      return self.service  
+    else :  
+      return None  	 	  

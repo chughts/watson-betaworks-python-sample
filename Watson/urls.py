@@ -36,4 +36,6 @@ urlpatterns = patterns('',
     url(r'^nlccreatex$', lc.nlcnewx, name='newclassifierx'),	 
 	url(r'^lctwitsearch$', lc.twitsearch, name='nltwitsearch'),
 	url(r'^lcdrop', lc.drop, name='nldrop'),
+	
+    url(r'^staudio$', lc.staudio, name='audiosample'),		
 )

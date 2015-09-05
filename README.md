@@ -36,6 +36,7 @@ instance names for your environment
 2. personality insights
 3. tradeoff analytics
 4. natural language classifier
+5. speech to text 
 
 If running outside of bluemix then the application needs access to service credentials. 
 Put Service credentials into a file credentials.json in the Watson\static\ directory, in the form:
@@ -51,12 +52,18 @@ Put Service credentials into a file credentials.json in the Watson\static\ direc
 	       "url":"https://gateway.watsonplatform.net/tradeoff-analytics/api",
 	       "user":"<user - from bluemix services for tradeoff analytics>",
 		   "password":"<password - from bluemix services for tradeoff analytics>"
-	    }
+	    },
     "LC": 		
 		{
             "url": "https://gateway.watsonplatform.net/natural-language-classifier-beta/api",
             "user": "<user - from bluemix services for natural language classifier>",
             "password": "<password - from bluemix services for natural language classifier>"
+        },
+    "ST": 		
+		{
+            "url": "https://stream.watsonplatform.net/speech-to-text/api",
+            "user": "<user - from bluemix services for speech to text>",
+            "password": "<password - from bluemix services for speech to text>"
         },
     "TW": 		
 		{
