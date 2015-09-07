@@ -44,10 +44,14 @@ function audioButtonStuff() {
 				localStream = stopButton.data("mediaStream");
 				if (localStream) {
 					// localStream.stop() was throwing a deprecated, will be removed in Nov 2015 
-					// so replaced
-					// localStream.stop();
-					var track = localStream.getTracks()[0];  
-					track.stop();
+					// so aded the track.stop(), but that didn't seem to work well with firefox, so
+					// for now keeping both in.
+					localStream.stop();
+					var numTracks = localStream.getTracks().length
+					for (i in localStream.getTracks()) {
+						var track = localStream.getTracks()[i];  
+						track.stop();
+					}
 				}
 			});
 	})();	
