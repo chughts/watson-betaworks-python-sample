@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # Copyright 2015 IBM
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,16 +13,20 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import os
-import json
+from django.contrib.auth.models import User
+from django.db.utils import IntegrityError 
 
-def get_vcap_settings(var_service):
-  """ Pulls VCAP settings from Bluemix environmental values"""
-  app_vcap_config = os.environ.get('VCAP_SERVICES')
-  if app_vcap_config:
-    app_decoded_config = json.loads(app_vcap_config) 
-    for key, value in app_decoded_config.items():
-      if key.startswith(var_service): 
-        the_creds = app_decoded_config[key][0]['credentials'] 
-        return the_creds
-  return None
+import logging
+
+logger = logging.getLogger(__name__)
+
+class MainProgram(object):
+  def __init__(self):
+    try:
+      User.objects.create_superuser(username='xxxx',password='yyyy',email='me@myco.com')
+    except IntegrityError as e:
+      logger.warning("DB Error Thrown %s" % e)
+
+go = MainProgram()
+
+ 

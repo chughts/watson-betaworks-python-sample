@@ -28,3 +28,24 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'ourFormatter': {
+            'format': '%(asctime)s:%(name)s:%(levelname)s:%(message)s',
+            'datefmt': '%m/%d/%Y %I:%M:%S',
+        },
+    },
+    'handlers': {
+        'theConsole': {
+            'class': 'logging.StreamHandler',
+            'formatter': 'ourFormatter',        
+        },
+    },
+    'root': {
+        'level': 'INFO',
+        'handlers': ['theConsole'],
+    },
+}

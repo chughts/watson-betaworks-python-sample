@@ -49,3 +49,24 @@ DATABASES = {
         'PORT' : db_port, 		
     }
 }
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'ourFormatter': {
+            'format': '%(asctime)s:%(name)s:%(levelname)s:%(message)s',
+            'datefmt': '%m/%d/%Y %I:%M:%S',
+        },
+    },
+    'handlers': {
+        'theConsole': {
+            'class': 'logging.StreamHandler',
+            'formatter': 'ourFormatter',        
+        },
+    },
+    'root': {
+        'level': 'WARN',
+        'handlers': ['theConsole'],
+    },
+}

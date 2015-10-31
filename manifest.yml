@@ -1,15 +1,15 @@
 applications:
-- disk_quota: 1024M
-  buildpack: https://github.com/cloudfoundry/cf-buildpack-python#v1.2.0
-  cf_stacks:
-    - lucid64
+- path: .
+  disk_quota: 1024M
+  memory: 128M
+  instances: 1
+  domain: mybluemix.net
   host: chughts-cognitive-python-01
   name: chughts-cognitive-python-01
-  path: .
-  domain: mybluemix.net
-  instances: 1
-  memory: 128M
-  command: bash ./run.sh
+  disk_quota: 1024M
+  buildpack: https://github.com/cloudfoundry/python-buildpack#v1.5.1
+  cf_stacks:
+    - cflinuxfs2  
+  command: bash ./run.sh 
   service:
   - postgresql-8v
-    
